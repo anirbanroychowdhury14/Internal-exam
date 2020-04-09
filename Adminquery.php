@@ -36,21 +36,12 @@
 					<td>
 						<div class="menu-bar">
 							<ul>
-								<li id="m1"><a href="Home.php" id="home-button"><i class="fas fa-home"></i></a></li>
-								<li><a href="#">&nbsp;LOGIN&nbsp;</a>
-									<ul>
-										<li id="m21"><a href="AdminLogin.php">ADMIN</a></li>
-										<li id="m22"><a href="TeacherLogin.php">TEACHER</a></li>
-										<li id="m23"><a href="StudentLogin.php">STUDENT</a></li>
-									</ul>
-								</li>
-								<li><a href="#">&nbsp;SIGN&nbsp;UP</a>
-									<ul>
-										<li id="m31"><a href="#">TEACHER</a></li>
-										<li id="m32"><a href="Studentsignup.php">STUDENT</a></li>
-									</ul>
-									</ul>
-								</li>		
+								<li><a href="Adminhome.html" id="home-button"><i class="fas fa-home"></i></a></li>
+								<li><a href="Adminquery.php">&nbsp;VIEW QUERY&nbsp;</a></li>
+								<li><a href="#">PUBLISH NOTICE</a>
+								<li><a href="#">RESULT</a></li>
+								<li><a href="#">VIEW STUDENT DETAILS</a></li>
+								<li><a href="AdminLogin.php">LOGOUT</a></li>
 							</ul>
 					</td>
 				</tr>
@@ -66,25 +57,22 @@
     				 $result = mysqli_query($connection,$query);
 
     				while($row = mysqli_fetch_assoc($result)) {
+    					$id=$row['Query_id'];
        					$Query_cont = $row['Query_cont'];
        					$author=$row['Author'];
-       					if($row['Query_reply']=='')
-       					{
-       						$id=$row['Query_id'];
-       						echo"<li>Posted by: ".$author."</li>";
-        					echo "&nbsp&nbsp&nbsp&nbsp&nbsp{$Query_cont}<br>";
-        					echo"<form action=\"Adminquery.php\" method=\"post\">
-        						<textarea cols=50 rows=5 required=\"yes\" name =\"query\"></textarea><br>
-								<button type=\"submit\" name=\"post\">POST</button>
-								</form>";
-								if(isset($_POST['post']))
+   						echo"<li>Posted by: ".$author."</li>";
+        				echo "&nbsp&nbsp&nbsp&nbsp&nbsp{$Query_cont}<br>";
+        				echo"<form action=\"Adminquery.php\" method=\"post\">
+        					<textarea cols=50 rows=5 required=\"yes\" name =\"query\"></textarea><br>
+							<button type=\"submit\" name=\"post\">POST</button>
+							</form>";
+							if(isset($_POST['post']))
 								{
+									header("Refresh:0");
 									$reply=$_POST['query'];
 									$q="Update query set Query_reply='$reply' where Query_id=$id";
 									mysqli_query($connection,$q);
 								}
-
-        				}
 
     				}
     				?>
