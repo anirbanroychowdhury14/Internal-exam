@@ -89,9 +89,14 @@
 <?php
 	if(isset($_POST['set']))
 	{
+		header("Refresh:0");
+		$sub=$_POST['subject'];
 		$qn=$_FILES['question']['name'];
 		$qt=$_FILES['question']['tmp_name'];
 		$fstore="Uploads/".$qn;
 		move_uploaded_file($qt, $fstore );
+		$q="Update teacher_tag set Question='$qn' where Subject_name='$sub'";
+		mysqli_query($connection,$q);
+		echo "<script>alert('Question Uploaded')</script>";
 	}
 ?>
